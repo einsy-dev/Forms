@@ -1,0 +1,63 @@
+* {
+    font-size: 22px;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.main_field {
+    width: 500px;
+    height: 400px;
+    margin: 200px auto;
+}
+
+input {
+    padding: 10px;
+    outline: none;
+}
+
+.btn {
+    height: 50px;
+}
+
+.input_form {
+    display: flex;
+    justify-content: center;
+}
+
+.input_field {
+    margin-top: auto;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.second_field {
+    margin: 0 auto;
+    height: 230px;
+    border: solid black 1px;
+    display: flex;
+    flex-wrap: wrap;
+    overflow-y: auto;
+}
+
+.task_item:nth-child(2n) {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.task_item {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.task_item>* {
+    width: 30%;
+    text-align: center;
+}
+
+.distance {
+    margin: 0 10%;
+}
+
+.second_title {
+    margin-top: 5%;
+}
