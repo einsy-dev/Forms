@@ -3,29 +3,34 @@ import { useState } from "react";
 export default function App() {
   const [state, setState] = useState([]);
 
-  const btn_sub = (evt) => {
-    evt.preventDefault();
-    const dateIn = evt.target[0].value;
-    const disIn = evt.target[1].value;
+// Function to handle the submit button click event
+const btn_sub = (evt) => {
+  evt.preventDefault(); // Prevent form submission
 
-    if (!state.length) {
-      setState(prev => [...prev, { date: dateIn, distance: disIn }]);
-      console.log('New data length = 0')
-      return
-    }
+  const dateIn = evt.target[0].value; // Get the value of the date input field
+  const disIn = evt.target[1].value; // Get the value of the distance input field
 
-    const newState = [...state];
-    const dateData = newState.find(el => el.date === dateIn);
-    if (dateData) {
-      dateData.distance = Number(dateData.distance) + Number(disIn)
-      setState(newState)
-      console.log('Change data')
-    }
-    else {
-      setState(prev => [...prev, { date: dateIn, distance: disIn }].sort((a, b) => a.date > b.date ? -1 : 1));
-      console.log('New data length > 0')
-    }
+  if (!state.length) {
+    // If the state array is empty
+    setState(prev => [...prev, { date: dateIn, distance: disIn }]); // Add a new object to the state array
+    console.log('New data length = 0'); // Log a message indicating new data is added
+    return; // Exit the function
   }
+
+  const newState = [...state]; // Create a new copy of the state array
+  const dateData = newState.find(el => el.date === dateIn); // Find an object in the state array with matching date
+
+  if (dateData) {
+    // If an object with matching date is found
+    dateData.distance = Number(dateData.distance) + Number(disIn); // Update the distance property of the object
+    setState(newState); // Update the state array
+    console.log('Change data'); // Log a message indicating data is changed
+  } else {
+    // If no object with matching date is found
+    setState(prev => [...prev, { date: dateIn, distance: disIn }].sort((a, b) => a.date > b.date ? -1 : 1)); // Add a new object to the state array and sort the array based on date
+    console.log('New data length > 0'); // Log a message indicating new data is added
+  }
+}
 
   const del = (id) => {
     setState(state.filter((el) => state.indexOf(el) !== id));
