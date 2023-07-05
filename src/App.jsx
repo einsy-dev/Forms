@@ -5,34 +5,27 @@ export default function App() {
 
   const btn_sub = (evt) => {
     evt.preventDefault();
-
     const dateIn = evt.target[0].value;
     const disIn = evt.target[1].value;
-    
-    if (state.length == 0) {
-      setState([
-        ...state,
-        { date: dateIn, distance: disIn },
-      ]);
-      return;
+
+    if (!state.length) {
+      setState(prev => [...prev, { date: dateIn, distance: disIn }]);
+      console.log('New data length = 0')
+      return
     }
-    
-    for (const index in state) {
-      if (Date(state[index].date) === Date(dateIn)) {
-        setState(prevState => [...prevState, prevState[index].distance = Number(state[index].distance) + Number(disIn)]);
-        console.log('Lol 1')
-        return
-      }
-      if ( index == state.length - 1) {
-        setState([
-          ...state,
-          { date: dateIn, distance: disIn },
-        ]);
-        console.log('Lol')
-        return
-      } 
+
+    const newState = [...state];
+    const dateData = newState.find(el => el.date === dateIn);
+    if (dateData) {
+      dateData.distance = Number(dateData.distance) + Number(disIn)
+      setState(newState)
+      console.log('Change data')
     }
-  };
+    else {
+      setState(prev => [...prev, { date: dateIn, distance: disIn }].sort((a, b) => a.date > b.date ? -1 : 1));
+      console.log('New data length > 0')
+    }
+  }
 
   const del = (id) => {
     setState(state.filter((el) => state.indexOf(el) !== id));
@@ -46,7 +39,7 @@ export default function App() {
         <div className="input_field">
           <label htmlFor="date">Date</label>
           <br />
-          <input type="date" id="date"/>
+          <input type="date" id="date" />
         </div>
         <div className="input_field">
           <label htmlFor="distance">Distance</label>
