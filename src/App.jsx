@@ -8,19 +8,30 @@ export default function App() {
 
     const dateIn = evt.target[0].value;
     const disIn = evt.target[1].value;
-
-
-    for (const key in state) {
-      if (Date(state[key]) === Date(dateIn)) {
-        setState({ ...state, key.distance: disIn })
-
-        return;
-      }
+    
+    if (state.length == 0) {
+      setState([
+        ...state,
+        { date: dateIn, distance: disIn },
+      ]);
+      return;
     }
-    setState([
-      ...state,
-      { data: dateIn, distance: disIn },
-    ]);
+    
+    for (const index in state) {
+      if (Date(state[index].date) === Date(dateIn)) {
+        setState(prevState => [...prevState, prevState[index].distance = Number(state[index].distance) + Number(disIn)]);
+        console.log('Lol 1')
+        return
+      }
+      if ( index == state.length - 1) {
+        setState([
+          ...state,
+          { date: dateIn, distance: disIn },
+        ]);
+        console.log('Lol')
+        return
+      } 
+    }
   };
 
   const del = (id) => {
@@ -35,7 +46,7 @@ export default function App() {
         <div className="input_field">
           <label htmlFor="date">Date</label>
           <br />
-          <input type="date" id="date" />
+          <input type="date" id="date"/>
         </div>
         <div className="input_field">
           <label htmlFor="distance">Distance</label>
@@ -53,7 +64,7 @@ export default function App() {
         <div className="second_field">
           {state?.map((el, id) => (
             <div className="task_item" key={id}>
-              <div>{el.data}</div>
+              <div>{el.date}</div>
               <div className="distance">{el.distance}</div>
               <div>
                 <button onClick={() => del(id)}>x</button>
